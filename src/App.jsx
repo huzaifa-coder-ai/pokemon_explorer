@@ -8,7 +8,7 @@ const App = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("https://pokeapi.co/api/v2/pokemon?limit=10")
+    fetch("https://pokeapi.co/api/v2/pokemon?limit=40")
       .then((res) => res.json())
       .then((data) => {
         setpokemonList(data.results);
@@ -29,6 +29,7 @@ const App = () => {
   }
   return (
   <>
+  
   <h1>Pokemon Explorer</h1>
   <div>
 
