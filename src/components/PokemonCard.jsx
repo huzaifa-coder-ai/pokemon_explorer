@@ -5,9 +5,12 @@ const PokemonCard = ({ name: pokemonName, url }) => {
   const imageUrl = `https://img.pokemondb.net/sprites/home/normal/${pokemonName}.png`;
   const [showDetails, setShowDetails] = useState(false);
   const [isLoading, setLoading] = useState(false);
-  const [pokemonDetails, setPokemonDetails] = useState('');
+  const [pokemonDetails, setPokemonDetails] = useState(null);
 
   useEffect(() => {
+
+    if(showDetails){
+
     setLoading(true);
     fetch(url)
       .then((res) => res.json())
@@ -18,10 +21,12 @@ const PokemonCard = ({ name: pokemonName, url }) => {
         setPokemonDetails(pokemonInformation)
       })
       .catch((err) => {
-        console.log("[test] error loading details ", err);
+        console.log("error loading details ", err);
         setLoading(false);
       });
-  }, [url]);
+
+      }
+  }, [showDetails,url]);
 
   const toggleDetails = () => {
     setShowDetails(!showDetails);
@@ -36,11 +41,11 @@ const PokemonCard = ({ name: pokemonName, url }) => {
       ></i>
       <img src={imageUrl} alt={pokemonName} />
       {isLoading && <h5>Loading details....</h5>}
-      {showDetails && (
+      {showDetails && pokemonDetails &&(
         <div className="details-section">
           <h2>Details :</h2>
           {pokemonDetails.abilities.map((ability)=>{
-            return <li>{ability.ability.name}</li>
+            return <li key={ability}>{ability.ability.name}</li>
           })}
           
         </div>
